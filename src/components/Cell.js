@@ -1,18 +1,14 @@
-function Cell({col, row, size, barrierSize}) {
-
-    let cellSize = '' + (size - barrierSize) + 'px';
+function Cell({x, y, width, height, status}) {
 
     let style = {
-        top: row*size,
-        left: col*size,
-        width: cellSize,
-        height: cellSize,
-        display: 'absolute',
-        background: 'blue'
+        top: y,
+        left: x,
+        width: width + 'px',
+        height: height + 'px',
     }
 
     return (
-        <div className="cell" style={style} />
+        <div className={"cell " + status}  style={style} />
     )
 }
 

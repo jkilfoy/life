@@ -16,3 +16,7 @@ code {
 .cell {
     position: absolute
 }
+
+.cell.alive {
+    background: #1de51d
+}
