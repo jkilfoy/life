@@ -1,32 +1,40 @@
+import { useIncrement } from "../hooks/useIncrement";
+import { useWorld } from "../hooks/useWorld";
 import Cell from "./Cell";
 
-function World({size}) {
-    
-    let grid = [];
-    for (let col = 0; col < size; col++) {
-        for (let row = 0; row < size; row++) {
-            grid.push({col: col, row: row});
-        }
-    }
+export const World = (props) => {
+    const {interval, width, height, cellSize, barrierSize} = props;
+    let increment = useIncrement(interval);
 
-    let barrierSize = 10;
-    let cellWidth = (window.innerWidth - (size+1) * barrierSize) / size;    
-    let cellHeight = (window.innerHeight - (size + 1) * barrierSize) / size; 
-    let cellSize = Math.min(cellWidth, cellHeight);
+    // build the world grid
+    let world = [];
+    let i = 0;
+    for (let col = 0; col < height; col++) {
+        world.push([])
+        for (let row = 0; row < width; row++) {
+            let x = col * cellSize + (col + 1) * barrierSize
+            let y = row * cellSize + (row + 1) * barrierSize
+            world[col].push({
+                x: x, y: y,
+                status: 'DEAD',
+                size: cellSize,
+                key: i
+            });
+            i++;
+        }
+    }    
 
     return (
         <div className="world">
-            {grid.map(pos => {
-                let x = pos.col * cellSize + (pos.col + 1) * barrierSize
-                let y = pos.row * cellSize + (pos.row + 1) * barrierSize
-                return <Cell x={x} y={y}
-                    width={cellSize}
-                    height={cellSize}
-                    status={'alive'}
-                    key={pos.col + 'k' + pos.row} />
-            })}
+            {world.map(row => 
+                row.map(cell => {
+                    return <Cell x={cell.x} y={cell.y}
+                            width={cell.size}
+                            height={cell.size}
+                            status={'alive'}
+                            key={cell.key} />;
+                })
+            )}
         </div>
     );
 }
-
-export default World;
