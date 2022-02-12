@@ -1,26 +1,34 @@
-import { useContext, useReducer } from 'react';
+import { useContext, useReducer, useState } from 'react';
 import './App.css';
 import { Controller } from './components/Controller';
-import World from './components/World';
+import {World} from './components/World';
 import { ConfigContext } from './context/ConfigContext';
 
-let configReducer = (config, prop, newVal) => {
-    config[prop] = newVal;
-    return config;
-}
+
 
 function App() {
-    // let config = useContext(ConfigContext);
-    const [config, dispatch] = useReducer(configReducer, {});
-    const configValues = {
-        config: config,
-        dispatch: dispatch
-    };
+    const {interval, setInterval} = useState(1000);
+    const {width, setWidth} = useState(20);
+    const {height, setHeight} = useState(20);
+    const {cellSize, setCellSize} = useState(20);
+    const {barrierSize, setBarrierSize} = useState(20);
+    const {colors, setColors} = useState({
+        ALIVE: 'green',
+        DEAD: 'gray',
+        EMPTY: 'white'
+    })
 
     return (
-        <ConfigContext.Provider value={configValues}>
+        <ConfigContext.Provider value={{interval, setInterval,
+        width, setWidth, height, setHeight,
+        cellSize, setCellSize,
+        barrierSize, setBarrierSize,
+        colors, setColors}}>
+            <div>
+                Howdy all
+            </div>
             <Controller />
-            <World size={16} />
+            <World />
         </ConfigContext.Provider>
     );
 }

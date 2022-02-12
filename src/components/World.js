@@ -1,9 +1,10 @@
+import { useContext } from "react";
+import { ConfigContext } from "../context/ConfigContext";
 import { useIncrement } from "../hooks/useIncrement";
-import { useWorld } from "../hooks/useWorld";
 import Cell from "./Cell";
 
-export const World = (props) => {
-    const {interval, width, height, cellSize, barrierSize} = props;
+export const World = () => {
+    const {interval, width, height, cellSize, barrierSize, colors} = useContext(ConfigContext);
     let increment = useIncrement(interval);
 
     // build the world grid
@@ -16,7 +17,7 @@ export const World = (props) => {
             let y = row * cellSize + (row + 1) * barrierSize
             world[col].push({
                 x: x, y: y,
-                status: 'DEAD',
+                status: 'EMPTY',
                 size: cellSize,
                 key: i
             });
@@ -31,7 +32,7 @@ export const World = (props) => {
                     return <Cell x={cell.x} y={cell.y}
                             width={cell.size}
                             height={cell.size}
-                            status={'alive'}
+                            status={cell.status}
                             key={cell.key} />;
                 })
             )}

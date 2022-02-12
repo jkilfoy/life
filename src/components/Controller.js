@@ -1,10 +1,16 @@
 import { useContext, useReducer } from "react";
-import { WorldContext } from "../context/ConfigContext";
+import { ConfigContext, WorldContext } from "../context/ConfigContext";
 
 
 export const Controller = (initialValues) => {
-    // todo
+    const { interval, setInterval, width, setWidth, 
+        height, setHeight, cellSize, setCellSize,
+        barrierSize, setBarrierSize, colors, setColors } = useContext(ConfigContext);
+
+
     return (
-        <div>Hope hope hope hope</div>
+        <div>Hope hope hope hope
+        
+        </div>
     )
 }
